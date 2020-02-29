@@ -10,8 +10,7 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.commitReminder",
-		"onCommand:extension.clearCommitReminderLogs"
+		"onCommand:extension.addCommitReminder",
 	],
 	"main": "./out/extension.js",
 	"contributes": {
