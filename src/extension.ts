@@ -63,22 +63,26 @@ export function activate(context: vscode.ExtensionContext) {
 			})
 	})
 
-	let disposable = vscode.commands.registerCommand('extension.getCommitReminders', () => {
+	let getCommitReminerdisposable = vscode.commands.registerCommand('extension.getCommitReminders', () => {
 
+		getCommits().then( commits =>{
 		
-		/*vscode.workspace.openTextDocument({content:'Tesssssssttttttdasdsadsadsadsadsadsadsasdsadsat',language:'txt'}).then( doc => {
-			vscode.window.showTextDocument(doc,{ viewColumn: vscode.ViewColumn.Beside });
+			let command = "";
+			commits.forEach(commit => {
+				command += `git add '${commit.path}'\r\ngit commit -m "${commit.desc}"\r\n`
+			});
 
-		});*/
-		vscode.commands.executeCommand("cursorEnd");
-
-
+			vscode.workspace.openTextDocument({content:command,language:'txt'}).then( doc => {
+				vscode.window.showTextDocument(doc,{ viewColumn: vscode.ViewColumn.Beside });
+	
+			});
+		})
 	});
 
 
 	context.subscriptions.push(commitReminderDisposable);
 	context.subscriptions.push(removeCommitReminderDisposable);
-	context.subscriptions.push(disposable);
+	context.subscriptions.push(getCommitReminerdisposable);
 }
 
 function saveCommits(commits: [ReminderCommit]) {
