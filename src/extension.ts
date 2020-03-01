@@ -10,12 +10,6 @@ const commitFile = vscode.Uri.file(`${root}\\${fileName}`);
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "commit-reminder" is now active!');
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
 	let commitReminderDisposable = vscode.commands.registerCommand('extension.addCommitReminder', () => {
 
 		vscode.window.showInputBox({
@@ -51,30 +45,27 @@ export function activate(context: vscode.ExtensionContext) {
 
 	let removeCommitReminderDisposable = vscode.commands.registerCommand('extension.removeCommitReminder', () => {
 		const editor = vscode.window.activeTextEditor;
-		getCommits().then( result =>
-			{
-				const index = result.findIndex( x => x.path == getPath(editor))
-				if(index == -1) 
-					vscode.window.showWarningMessage("This page does not have any commit reminder!");
-				else{
-					result.splice(index,1);
-					saveCommits(result);
-				}
-			})
+		getCommits().then(result => {
+			const index = result.findIndex(x => x.path == getPath(editor))
+			if (index == -1)
+				vscode.window.showWarningMessage("This page does not have any commit reminder!");
+			else {
+				result.splice(index, 1);
+				saveCommits(result);
+			}
+		})
 	})
 
 	let getCommitReminerDisposable = vscode.commands.registerCommand('extension.getCommitReminders', () => {
 
-		getCommits().then( commits =>{
-		
+		getCommits().then(commits => {
 			let command = "";
 			commits.forEach(commit => {
 				command += `git add '${commit.path}'\r\ngit commit -m "${commit.desc}"\r\n`
 			});
 
-			vscode.workspace.openTextDocument({content:command,language:'txt'}).then( doc => {
+			vscode.workspace.openTextDocument({ content: command, language: 'txt' }).then(doc => {
 				vscode.window.showTextDocument(doc);
-	
 			});
 		})
 	});
@@ -82,8 +73,6 @@ export function activate(context: vscode.ExtensionContext) {
 	let resetDisposable = vscode.commands.registerCommand('extension.clearCommitReminders', () => {
 		vscode.workspace.fs.delete(commitFile);
 	})
-
-
 
 	context.subscriptions.push(commitReminderDisposable);
 	context.subscriptions.push(removeCommitReminderDisposable);
@@ -95,11 +84,11 @@ function saveCommits(commits: [ReminderCommit]) {
 	vscode.workspace.fs.writeFile(commitFile, Buffer.from(JSON.stringify(commits)));
 }
 
-function getCommits() : Thenable<[ReminderCommit]>{
+function getCommits(): Thenable<[ReminderCommit]> {
 
 	return vscode.workspace.fs.readFile(commitFile)
 		.then(data => {
-			return  JSON.parse(new TextDecoder('utf-8').decode(data));
+			return JSON.parse(new TextDecoder('utf-8').decode(data));
 		});
 }
 
@@ -122,5 +111,5 @@ function undefinedToString(param: string | undefined) {
 }
 
 function getPath(editor: vscode.TextEditor | undefined) {
-	return editor?.document.uri.fsPath.replace(root+'\\', '')
+	return editor?.document.uri.fsPath.replace(root + '\\', '')
 }
