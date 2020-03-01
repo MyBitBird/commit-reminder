@@ -63,7 +63,7 @@ export function activate(context: vscode.ExtensionContext) {
 			})
 	})
 
-	let getCommitReminerdisposable = vscode.commands.registerCommand('extension.getCommitReminders', () => {
+	let getCommitReminerDisposable = vscode.commands.registerCommand('extension.getCommitReminders', () => {
 
 		getCommits().then( commits =>{
 		
@@ -73,16 +73,22 @@ export function activate(context: vscode.ExtensionContext) {
 			});
 
 			vscode.workspace.openTextDocument({content:command,language:'txt'}).then( doc => {
-				vscode.window.showTextDocument(doc,{ viewColumn: vscode.ViewColumn.Beside });
+				vscode.window.showTextDocument(doc);
 	
 			});
 		})
 	});
 
+	let resetDisposable = vscode.commands.registerCommand('extension.clearCommitReminders', () => {
+		vscode.workspace.fs.delete(commitFile);
+	})
+
+
 
 	context.subscriptions.push(commitReminderDisposable);
 	context.subscriptions.push(removeCommitReminderDisposable);
-	context.subscriptions.push(getCommitReminerdisposable);
+	context.subscriptions.push(getCommitReminerDisposable);
+	context.subscriptions.push(resetDisposable);
 }
 
 function saveCommits(commits: [ReminderCommit]) {
@@ -116,5 +122,5 @@ function undefinedToString(param: string | undefined) {
 }
 
 function getPath(editor: vscode.TextEditor | undefined) {
-	return editor?.document.uri.fsPath.replace(root, '')
+	return editor?.document.uri.fsPath.replace(root+'\\', '')
 }
