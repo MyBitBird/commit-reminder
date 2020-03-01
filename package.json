@@ -1,8 +1,14 @@
 {
 	"name": "commit-reminder",
-	"displayName": "Commit Reminer",
-	"description": "remain your commit description for commiting",
-	"version": "0.0.1",
+	"displayName": "Commit Reminder",
+	"description": "Help you to remember what you have done on each file and generate a git script for committing",
+	"version": "0.0.2",
+	"publisher": "BitBird",
+	"icon": "images/logo.png",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/MyBitBird/commit-reminder"
+	  },
 	"engines": {
 		"vscode": "^1.42.0"
 	},
