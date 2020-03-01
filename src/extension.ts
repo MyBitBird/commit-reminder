@@ -26,17 +26,14 @@ export function activate(context: vscode.ExtensionContext) {
 				return;
 
 			const editor = vscode.window.activeTextEditor;
-			let commits: [ReminderCommit];
 
 			vscode.workspace.findFiles(fileName).then(file => {
 
 				if (file.length == 0) {
-					commits = [(new ReminderCommit(getPath(editor), desc))];
-					saveCommits(commits);
+					saveCommits([(new ReminderCommit(getPath(editor), desc))]);
 				}
 				else {
-					getCommits().then(result => {
-						commits = result;
+					getCommits().then(commits => {
 						const existIndex = commits.findIndex(x => x.path == getPath(editor));
 
 						if (existIndex >= 0)
@@ -53,11 +50,22 @@ export function activate(context: vscode.ExtensionContext) {
 	});
 
 	let removeCommitReminderDisposable = vscode.commands.registerCommand('extension.removeCommitReminder', () => {
-
+		const editor = vscode.window.activeTextEditor;
+		getCommits().then( result =>
+			{
+				const index = result.findIndex( x => x.path == getPath(editor))
+				if(index == -1) 
+					vscode.window.showWarningMessage("This page does not have any commit reminder!");
+				else{
+					result.splice(index,1);
+					saveCommits(result);
+				}
+			})
 	})
 
 	let disposable = vscode.commands.registerCommand('extension.getCommitReminders', () => {
 
+		
 		/*vscode.workspace.openTextDocument({content:'Tesssssssttttttdasdsadsadsadsadsadsadsasdsadsat',language:'txt'}).then( doc => {
 			vscode.window.showTextDocument(doc,{ viewColumn: vscode.ViewColumn.Beside });
 
@@ -77,11 +85,11 @@ function saveCommits(commits: [ReminderCommit]) {
 	vscode.workspace.fs.writeFile(commitFile, Buffer.from(JSON.stringify(commits)));
 }
 
-function getCommits() {
+function getCommits() : Thenable<[ReminderCommit]>{
 
 	return vscode.workspace.fs.readFile(commitFile)
 		.then(data => {
-			return JSON.parse(new TextDecoder('utf-8').decode(data));
+			return  JSON.parse(new TextDecoder('utf-8').decode(data));
 		});
 }
 

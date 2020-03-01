@@ -11,6 +11,7 @@
 	],
 	"activationEvents": [
 		"onCommand:extension.addCommitReminder",
+		"onCommand:extension.removeCommitReminder",
 		"onCommand:extension.getCommitReminders"
 	],
 	"main": "./out/extension.js",
@@ -19,6 +20,10 @@
 			{
 				"command": "extension.addCommitReminder",
 				"title": "Add Commit Reminder"
+			},
+			{
+				"command": "extension.removeCommitReminder",
+				"title": "Remove Commit Reminder"
 			},
 			{
 				"command": "extension.getCommitReminders",
