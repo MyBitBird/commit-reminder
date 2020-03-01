@@ -11,6 +11,7 @@
 	],
 	"activationEvents": [
 		"onCommand:extension.addCommitReminder",
+		"onCommand:extension.getCommitReminders"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -18,6 +19,10 @@
 			{
 				"command": "extension.addCommitReminder",
 				"title": "Add Commit Reminder"
+			},
+			{
+				"command": "extension.getCommitReminders",
+				"title": "Get Commit Reminders"
 			}
 		]
 	},
