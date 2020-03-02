@@ -17,8 +17,11 @@ Finally, when you are ready for committing your changes, use `Get Commit Reminde
 
 ## How to run
 
-1 - Install the extension by searching in your VSCode Extensions or directly download from [marketplace](https://marketplace.visualstudio.com/items?itemName=BitBird.commit-reminder)
-2 - press `Ctrl + Shift + p` in vscode and enter commands
+1 - Downloading: Install the extension by searching in your VSCode Extensions or directly download from [marketplace](https://marketplace.visualstudio.com/items?itemName=BitBird.commit-reminder) 
+
+2 - Compiling: clone the repository , run `npm install` and build it with VSCode
+
+Finally press `Ctrl + Shift + p` in vscode and enter commands
 
 **Enjoy!**
 
