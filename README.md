@@ -17,7 +17,8 @@ Finally, when you are ready for committing your changes, use `Get Commit Reminde
 
 ## How to run
 
-Install the extension, press `Ctrl + Shift + p` in vscode and enter command
+1 - Install the extension by searching in your VSCode Extensions or directly download from [marketplace](https://marketplace.visualstudio.com/items?itemName=BitBird.commit-reminder)
+2 - press `Ctrl + Shift + p` in vscode and enter commands
 
 **Enjoy!**
 
