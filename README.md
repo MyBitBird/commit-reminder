@@ -1,4 +1,4 @@
-# Visual Code Extension for reminding commits!
+# Visual Studio Code Extension for reminding commits!
 
 commit-reminder is a VSCode extension that help you to remember what you have done on each file and generate git script for committing.
 
